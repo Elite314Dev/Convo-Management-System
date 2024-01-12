@@ -18,6 +18,27 @@ app.get("/", (req, res) => {
   res.send("Welcome to Custom ChatGPT...!");
 });
 
+app.post("/chat", async (req, res) => {
+  const { messageContent } = req.body;
+
+  try {
+    const completion = await openai.chat.completions.create({
+      messages: [
+        { role: "system", content: "You are a helpful assistant." },
+        { role: "user", content: messageContent },
+      ],
+      model: "gpt-3.5-turbo-1106",
+    });
+
+    let response = completion.choices[0];
+
+    res.send(response);
+  } catch (error) {
+    console.error("Error in /chat endpoint:", error);
+    res.status(500).send("Error handling chat request");
+  }
+});
+
 const PORT = 5000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
