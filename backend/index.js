@@ -62,6 +62,24 @@ app.post("/startConversation", async (req, res) => {
   }
 });
 
+app.post("/sendMessage", async (req, res) => {
+  const { messageContent, fileData } = req.body;
+  console.log("Message Recieved", messageContent);
+  const message = await openai.beta.threads.messages.create(currentThread.id, {
+    role: "user",
+    content: messageContent,
+    // fileData: fileData, // Optional file upload handling
+  });
+
+  const run = await openai.beta.threads.runs.create(currentThread.id, {
+    assistant_id: assistantId,
+    instructions:
+      req.body.additionalInstructions || "Provide detailed and rich responses",
+  });
+
+  res.send({ runId: run.id });
+});
+
 app.get("/getResponse/:runId", async (req, res) => {
   const runId = req.params.runId;
   console.log("Run ID : ", runId);
