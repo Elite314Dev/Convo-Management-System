@@ -80,23 +80,6 @@ app.post("/sendMessage", async (req, res) => {
   res.send({ runId: run.id });
 });
 
-app.get("/getResponse/:runId", async (req, res) => {
-  const runId = req.params.runId;
-  console.log("Run ID : ", runId);
-  const response = await openai.beta.threads.runs.retrieve(
-    currentThread.id,
-    runId
-  );
-
-  if (response.status === "completed") {
-    const messages = await openai.beta.threads.messages.list(currentThread.id);
-    res.send(messages);
-    console.log("Messages :", messages);
-  } else {
-    res.send({ status: response.status });
-  }
-});
-
 const PORT = 5000 || process.env.PORT;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
