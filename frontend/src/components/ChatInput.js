@@ -81,47 +81,6 @@ const App = () => {
           </div>
         </div>
       )}
-
-      {/* Main Chat Window */}
-      <div className="flex-grow flex flex-col items-center justify-center w-full">
-        <div className="w-full max-w-2xl h-full bg-gray-800 rounded-lg flex flex-col">
-          <div className="flex-grow p-4 overflow-y-auto">
-            {messages.length === 0 && (
-              <div className="text-white text-center mt-2 font-bold">
-                How can I help you today?
-              </div>
-            )}
-            {messages.map((message, index) => (
-              <div key={index} className="flex items-center text-white mb-2">
-                <FontAwesomeIcon
-                  icon={message.sender === "user" ? faUser : faRobot}
-                  className="mr-2"
-                />
-                {message.text}
-              </div>
-            ))}
-          </div>
-          <div className="flex justify-center p-4">
-            <form onSubmit={handleSend} className="relative w-full">
-              <input
-                className="w-full p-4 pl-4 pr-10 text-white bg-gray-800 rounded-2xl border border-white focus:outline-none"
-                placeholder="Send a message"
-                value={input}
-                onChange={handleInputChange}
-              />
-              <button
-                type="submit"
-                className="absolute inset-y-0 right-0 pr-3 flex items-center text-white"
-              >
-                <FontAwesomeIcon
-                  icon={faPaperPlane}
-                  style={{ color: "#fff" }}
-                />
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };
